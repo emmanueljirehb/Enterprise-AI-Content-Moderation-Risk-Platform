@@ -320,9 +320,3 @@ This project demonstrates:
 ## output csv
 
 <img width="957" height="485" alt="image" src="https://github.com/user-attachments/assets/4b3a3fab-0ae9-4eab-ac83-f4b10c3cb594" />
-
-## helped prakash for this project
-
-<img width="662" height="482" alt="image" src="https://github.com/user-attachments/assets/4b3eb693-ad6f-472e-a64a-496f22813efe" />
-
-invoce extractor

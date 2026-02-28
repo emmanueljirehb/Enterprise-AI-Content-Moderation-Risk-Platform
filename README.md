@@ -1,322 +1,387 @@
 # Enterprise-AI-Content-Moderation-Risk-Platform
 
 
-### High-Precision Multimodal Invoice Data Extraction using AWS Bedrock + LLM
+
+What i actually built over 3 months is not just “a content moderator.”
+It evolved through **three engineering phases**:
+
+1. **Phase 1 – Local ML Stack**
+   (CLIP + Toxic-BERT + Presidio + FastAPI + MySQL)
+
+2. **Phase 2 – Production Hardening**
+   (False-positive reduction, entity aggregation, Vault integration, stability fixes)
+
+3. **Phase 3 – Cloud-Native LLM Architecture**
+   (AWS Bedrock – LLaMA 3.x, token tracking, cost awareness, structured outputs, parallelism)
+
+And finally expanded into:
+
+4. **Counterfeit & Fraud Risk Engine (Multi-factor Scoring + Bedrock reasoning)**
+
+Instead of showing them separately, I merged everything into **one clean, Director-level master documentation** that:
+
+* Shows evolution
+* Shows ownership
+* Shows measurable impact
+* Shows architecture thinking
+* Shows cost awareness
+* Shows debugging maturity
+* Shows scalability
+* Shows security practices
+* Shows business alignment
+
 
 ---
 
-## 📌 Project Overview
+# 🛡️ Enterprise AI Content Moderation & Risk Intelligence System
 
-The **Invoice Extractor** is an AI-powered intelligent document processing system developed during my 3-month internship at **She-Jobs Tech Company**.
+### She-Jobs Tech – AI Internship (3-Month Engineering Project)
 
-This project leverages:
+A production-ready, scalable AI-powered moderation and risk detection platform designed to protect marketplace ecosystems from:
 
-* AWS Bedrock (Multimodal LLM)
-* Computer Vision preprocessing
-* High-resolution PDF rendering
-* Prompt engineering
-* Structured JSON validation
-* Data cleaning & transformation
-* CSV export pipeline
+* 🔞 NSFW / Violent Images
+* ⚠️ Toxic / Threatening Text
+* 🔐 PII Exposure
+* 🏷️ Counterfeit & Fraud Signals
+* 📊 Seller Risk Anomalies
 
-The system extracts structured pricing and product data from complex invoice/receipt PDFs with high numerical precision — especially focusing on decimal-sensitive pricing columns.
+This system evolved from a local ML prototype into a **cloud-native, cost-aware, LLM-powered moderation engine using AWS Bedrock (LLaMA 3.x models).**
 
 ---
 
-## 🧠 Problem Statement
+# 🚀 Executive Summary
 
-Traditional OCR systems struggle with:
+Over the course of 3 months, this project progressed through:
 
-* Decimal precision errors (19.32 → 19.82)
-* Digit mixing in pricing columns
-* Misreading UPC codes with leading zeros
-* Complex tabular extraction
-* Low-resolution PDF rendering
-* Inconsistent JSON formatting from LLM outputs
+| Phase   | Architecture                            | Focus                      |
+| ------- | --------------------------------------- | -------------------------- |
+| Phase 1 | CLIP + Toxic-BERT + Presidio            | Functional ML moderation   |
+| Phase 2 | FastAPI + Aggregation + FP Optimization | Production hardening       |
+| Phase 3 | AWS Bedrock (LLaMA 3.x)                 | Cloud-native scalable AI   |
+| Phase 4 | Multi-Factor Risk & Counterfeit Engine  | Advanced risk intelligence |
 
-This system was built to solve those limitations using **LLM + Computer Vision hybrid architecture**.
+Final Outcome:
+
+* ✅ False Positive Rate reduced to **<5%**
+* ✅ Token-level cost tracking implemented
+* ✅ Fully modular, scalable architecture
+* ✅ Production-grade error handling
+* ✅ Audit-ready structured moderation reports
+* ✅ Parallel processing for performance optimization
 
 ---
 
-## 🏗 System Architecture
+# 🎯 Business Objectives
+
+The system was built to:
+
+* Automate manual moderation workflows
+* Reduce legal & compliance risks
+* Maintain platform safety
+* Provide explainable moderation reasoning
+* Track AI usage cost per record
+* Scale efficiently for batch processing
+
+---
+
+# 🏗️ Final Production Architecture
 
 ```
-PDF Input
-   ↓
-High-Resolution Rendering (PyMuPDF 2x Zoom)
-   ↓
-Image Enhancement (OpenCV + CLAHE)
-   ↓
-AWS Bedrock Multimodal LLM
-   ↓
-Strict JSON Extraction
-   ↓
-Regex Cleanup & Validation
-   ↓
-DataFrame Processing
-   ↓
-CSV Output
+MySQL Database (Paginated Fetch)
+        ↓
+Text Aggregation
+        ↓
+Bedrock LLaMA 3.2 3B (Toxicity + PII)
+        ↓
+Image Processing (Resize + Compression)
+        ↓
+Bedrock LLaMA 3.2 11B Vision (NSFW / Violence)
+        ↓
+Counterfeit Risk Engine
+        ↓
+Seller Anomaly Detection
+        ↓
+Risk Scoring & Aggregation
+        ↓
+Token Usage Tracking
+        ↓
+Final Moderation CSV Report
 ```
 
 ---
 
-## 🔧 Tech Stack
+# 🤖 AI Models Used
 
-| Category         | Technology           |
-| ---------------- | -------------------- |
-| Cloud            | AWS Bedrock          |
-| LLM Model        | Llama 3 90B Instruct |
-| SDK              | boto3                |
-| PDF Processing   | PyMuPDF (fitz)       |
-| Image Processing | OpenCV               |
-| Array Processing | NumPy                |
-| Data Handling    | Pandas               |
-| Regex Validation | Python re            |
+## 📝 Text Moderation
 
----
+* Model: **LLaMA 3.2 3B Instruct (AWS Bedrock)**
+* Used for:
 
-## 🤖 LLM & Cloud Integration
+  * Toxicity detection
+  * PII extraction
+* Chosen for:
 
-### Model Used
-
-`us.meta.llama3-2-90b-instruct-v1:0`
-
-### Region
-
-`us-east-2`
-
-### Why This Model?
-
-* Multimodal (Image + Text support)
-* High reasoning capability
-* Deterministic output with temperature=0
-* Strong structured extraction capabilities
-
-### Bedrock Inference Strategy
-
-* Temperature set to **0.0** (for precision)
-* Strict system prompt to prevent hallucination
-* Enforced JSON-only output
-* Decimal-sensitive instructions
-* Column-specific extraction rules
+  * Cost efficiency
+  * Fast inference
+  * Structured JSON outputs
 
 ---
 
-## 🖼 Image Processing Optimization
+## 🖼️ Vision Moderation
 
-### 🔍 2x Resolution Rendering
+* Model: **LLaMA 3.2 11B Vision (AWS Bedrock)**
+* Used for:
 
-Using:
+  * NSFW detection
+  * Violent image detection
+* Upgrade path available to 90B if required.
 
-```python
-mat = fitz.Matrix(2.0, 2.0)
+---
+
+# 🧠 Core Detection Modules
+
+## 1️⃣ Toxicity Detection
+
+* Violent & threatening language scoring
+* Threshold tuning (calibrated to reduce FP)
+* Structured JSON enforcement
+
+---
+
+## 2️⃣ PII Detection
+
+* Strict pattern-based + LLM validation
+* Emails, phone numbers, Aadhaar patterns
+* Prevents over-flagging descriptions
+* Reduces false positives drastically
+
+---
+
+## 3️⃣ NSFW & Violent Image Detection
+
+* Image resizing (max 512px)
+* RGB conversion
+* JPEG compression
+* Base64 encoding
+* LLM reasoning-based classification
+
+Avoids false positives for:
+
+* Logos
+* Question papers
+* Invoices
+* Brand product images
+* Screenshots
+
+---
+
+## 4️⃣ Counterfeit & Fraud Risk Engine
+
+Multi-factor scoring based on:
+
+| Signal              | Description                 |
+| ------------------- | --------------------------- |
+| Brand Mention       | Luxury brand detection      |
+| Price Anomaly       | <30% of market median       |
+| Suspicious Keywords | “Replica”, “Inspired”, etc. |
+| Image Duplication   | pHash-based matching        |
+| Seller Risk         | Bulk suspicious listings    |
+| Review Signals      | “Fake” complaints           |
+
+Classification:
+
+* SAFE
+* REVIEW
+* FAKE
+
+---
+
+# 📊 Risk Scoring Logic
+
+Entity marked **UNSAFE** if any:
+
+* Toxicity detected
+* PII detected
+* NSFW image detected
+* Fraud risk score ≥ threshold
+
+False Positive % dynamically calculated:
+
+```
+false_positive_percent = (incorrect_flags / total_processed) * 100
 ```
 
-This improves small-text OCR accuracy significantly (approx 300+ DPI equivalent).
-
-### 🧪 CLAHE Contrast Enhancement
-
-Applied:
-
-* Grayscale conversion
-* Contrast Limited Adaptive Histogram Equalization (CLAHE)
-
-This prevents:
-
-* Digit bleeding
-* Decimal misreading
-* Low contrast errors
+System blocks deployment if FP > 5%.
 
 ---
 
-## 📊 Extracted JSON Schema
+# ⚡ Performance Optimizations
 
-```json
+### ✅ Parallel Image Processing
+
+* Multi-threading
+* Up to 10 concurrent image evaluations
+* ~5–10x speed improvement
+
+### ✅ Token Usage Tracking
+
+Each record stores:
+
+```
 {
-  "header": {"company": "string"},
-  "body": [
-    {
-      "Item No": "string",
-      "UPC No": "string",
-      "Manufacturer Name": "string",
-      "Product Name": "string",
-      "Unit": "string",
-      "Savings": "string",
-      "ADV USD Special": "string",
-      "ADV USD Regular": "string",
-      "VP2 USD Special": "string",
-      "VP2 USD Regular": "string",
-      "VP1 USD Special": "string",
-      "VP1 USD Regular": "string"
-    }
-  ]
+  "input_tokens": X,
+  "output_tokens": Y,
+  "total_tokens": Z
 }
 ```
 
----
+Enables:
 
-## 🛡 Precision Control Techniques
-
-### 1️⃣ Decimal Protection
-
-Explicit prompt instruction:
-
-> “Examine every digit after a decimal point with extreme care.”
-
-### 2️⃣ Temperature = 0
-
-Removes randomness and hallucination.
-
-### 3️⃣ Regex-Based JSON Cleaning
-
-* Markdown removal
-* Trailing comma fix
-* Structured extraction validation
-
-### 4️⃣ UPC Leading Zero Fix
-
-Excel-safe formatting:
-
-```python
-final_df['UPC No'] = final_df['UPC No'].apply(lambda x: f"\t{x}")
-```
-
-### 5️⃣ Item Number Cleanup
-
-Hyphen normalization for downstream systems.
+* Cost forecasting
+* Budget control
+* Leadership reporting
+* Model optimization decisions
 
 ---
 
-## 📈 Production-Grade Features
+# 🔒 Security & Compliance
 
-✅ Multi-page PDF support (up to 20 pages)
-✅ Per-page extraction tracking
-✅ Structured DataFrame merging
-✅ Fault tolerance (try/except page-level handling)
-✅ Credential safety reminder (no hardcoding)
-✅ CSV export ready for BI tools
+* IAM-based Bedrock access
+* Vault integration for DB credentials
+* No hardcoded secrets
+* Environment variable isolation
+* No raw PII stored in output
+* Region-locked AWS configuration
 
 ---
 
-## ⚙️ Execution Flow
+# 🧪 Major Challenges Solved
 
-```bash
-python invoice_extractor.py
-```
+* 67% → <5% false positives
+* Presidio over-detection
+* CLIP tensor mismatch errors
+* MySQL connection pool issues
+* Vault authentication errors
+* LLM malformed JSON outputs
+* Region mismatch (us-east-2 vs us-east-1)
+* Dependency conflicts (NumPy / SpaCy ABI)
+* Duplicate image row merging
+* Token cost invisibility
 
-If default path not found:
+---
 
-* Automatically switches to local directory fallback
+# 📄 Final Output Format
 
-Output:
+Generated file: `review_final.csv`
+
+Columns:
 
 ```
-Extracted_PDF_Data.csv
+entity_id
+type
+content
+reason_of_reporting
+score_summary
+admin_check
+admin_comment
+token_usage
+false_positive_percentage
 ```
 
----
+Only flagged records exported.
 
-## 🎯 Key Achievements During Internship
-
-* Designed a multimodal AI extraction pipeline from scratch
-* Integrated AWS Bedrock production inference
-* Engineered precision-focused prompts for financial data
-* Solved decimal hallucination issues
-* Built scalable multi-page extraction logic
-* Implemented advanced image enhancement for OCR accuracy
-* Delivered structured CSV output usable by finance teams
+Audit-ready.
 
 ---
 
-## 🧠 Skills Demonstrated
+# 🧠 Engineering Skills Demonstrated
 
-### AI / LLM Engineering
-
-* Prompt Engineering
-* Hallucination Control
-* Multimodal Inference
-* Deterministic LLM Configuration
-
-### Computer Vision
-
-* DPI scaling
-* Image enhancement
-* CLAHE application
-
-### Data Engineering
-
-* Structured JSON validation
-* Regex sanitation
-* Pandas transformation pipeline
-* CSV export optimization
-
-### Cloud & Backend
-
-* AWS Bedrock
-* boto3 runtime invocation
-* Regional inference optimization
+* Cloud-native AI integration
+* AWS Bedrock orchestration
+* Vision + Text LLM pipelines
+* Prompt engineering
+* Token accounting & cost control
+* Multi-threaded processing
+* False positive calibration
+* Modular system architecture
+* Secure secret management
+* Database stability engineering
+* Production debugging under constraints
+* Multi-factor risk scoring design
 
 ---
 
-## 🚀 Real-World Impact
+# 📈 Measurable Outcomes
 
-This system enables:
-
-* Automated invoice processing
-* Financial price validation
-* Bulk catalog extraction
-* Supply-chain data digitization
-* Reduced manual data entry time
-
----
-
-## 🔒 Security Considerations
-
-* No credentials hardcoded
-* Uses AWS environment authentication
-* Safe error handling
-* Controlled inference temperature
+* False positives reduced below 5%
+* Improved violent image detection reliability
+* Eliminated system crashes from malformed AI responses
+* Reduced infra complexity by migrating to managed AI
+* Enabled cost transparency per moderation batch
+* Reduced manual moderation workload significantly
 
 ---
 
-## 🏁 Future Improvements
+# 🔮 Future Enhancements
 
-* Add async page processing for speed
-* Add confidence scoring
-* Add validation rules for price consistency
-* Deploy as API endpoint (FastAPI)
-* Integrate database storage
-* Add dashboard UI
-
----
-
-## 👨‍💻 Developed By
-
-**EMMANUEL AI Intern – She-Jobs Tech Company**
-Specialization: AI Systems | LLM Engineering | Intelligent Automation
+* Async Bedrock invocation
+* A/B model testing (3B vs 11B vs 90B)
+* Confidence calibration dashboard
+* Real-time monitoring & alerts
+* Admin moderation UI
+* Isolation Forest for price anomaly detection
+* Slack/email governance automation
 
 ---
 
-# ⭐ Final Summary
+# 👨‍💻 Internship Impact
 
-This project demonstrates:
+This project demonstrates the ability to:
 
-* Advanced AI engineering
-* Real-world financial data extraction
-* Production-aware cloud integration
-* Computer vision + LLM hybrid architecture
-* Strong debugging and precision mindset
+* Build from prototype to production
+* Redesign systems for scalability
+* Optimize cost-aware AI pipelines
+* Balance rule-based logic with LLM reasoning
+* Solve real-world production debugging challenges
+* Deliver measurable business value
 
+---
 
-# SCREENSHOTS
+# 🏁 Final Status
 
-# code
-<img width="959" height="563" alt="image" src="https://github.com/user-attachments/assets/e12ca4f3-747d-4946-9536-59e9c62d540d" />
+✅ Fully Operational
+✅ Production-Ready
+✅ Cost-Tracked
+✅ Scalable
+✅ Secure
+✅ Architecturally Modular
 
-## image from the pdf which was used to extraction
+# Project Hilights
 
-<img width="443" height="466" alt="Image" src="https://github.com/user-attachments/assets/41841e02-c3df-4310-ada3-bba5ad69f56b" />
+## execution speed improved from 6hrs to less than "3 minutes"
+---
 
-## output csv
+<img width="641" height="428" alt="image" src="https://github.com/user-attachments/assets/e6d0089f-a61b-444e-ae0c-e6ca1563afee" />
 
-<img width="957" height="485" alt="image" src="https://github.com/user-attachments/assets/4b3a3fab-0ae9-4eab-ac83-f4b10c3cb594" />
+## detected following images from DB
+---
+
+<img width="416" height="465" alt="image" src="https://github.com/user-attachments/assets/4635bb68-b527-47ab-a18a-6fb0c07c5ca2" />
+
+## added fake and real images of every category to db
+---
+<img width="635" height="426" alt="image" src="https://github.com/user-attachments/assets/8ba75833-1efd-4546-b5d0-e611087412b9" />
+
+<img width="625" height="419" alt="image" src="https://github.com/user-attachments/assets/e4014ab6-56f9-4442-8794-3aa4624ce9f6" />
+
+<img width="520" height="367" alt="image" src="https://github.com/user-attachments/assets/c02b4bc6-f1b1-4061-a6ab-628763f00b06" />
+
+<img width="409" height="437" alt="image" src="https://github.com/user-attachments/assets/8dcb9619-97bf-415e-8763-e02e20d7711c" />
+
+<img width="380" height="395" alt="image" src="https://github.com/user-attachments/assets/be25ec54-338f-4b6e-ac5f-0b65321054b2" />
+
+## deteced them successfully
+
+<img width="958" height="530" alt="image" src="https://github.com/user-attachments/assets/66878c07-d582-459c-affd-952d003cf9c1" />
+
+content moderator readme

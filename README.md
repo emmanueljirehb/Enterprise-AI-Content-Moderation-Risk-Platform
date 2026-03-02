@@ -370,7 +370,6 @@ This project demonstrates the ability to:
 
 ## added fake and real images of every category to db
 ---
-<img width="635" height="426" alt="image" src="https://github.com/user-attachments/assets/8ba75833-1efd-4546-b5d0-e611087412b9" />
 
 <img width="625" height="419" alt="image" src="https://github.com/user-attachments/assets/e4014ab6-56f9-4442-8794-3aa4624ce9f6" />
 
@@ -384,4 +383,3 @@ This project demonstrates the ability to:
 
 <img width="958" height="530" alt="image" src="https://github.com/user-attachments/assets/66878c07-d582-459c-affd-952d003cf9c1" />
 
-content moderator readme
